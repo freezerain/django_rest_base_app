@@ -18,12 +18,13 @@ from django.urls import include, path
 from rest_framework import routers
 
 from django_rest.api_app import views
+from django_rest.api_app.views import PermissionViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'events', views.EventViewSet)
-
+router.register(r'permission', PermissionViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

@@ -1,29 +1,46 @@
+from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from django_rest.api_app.models import Events, EVENT_STATUS
+from django_rest.api_app.models import Events
+
+DEFAULT_CHAR_LENGTH = 200
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    my_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
+
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = ['url', 'username', 'my_events']
+        # exclude = ('password', 'last_login', 'is_superuser', 'last_name', '')
+        # fields = '__all__'
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        # fields = ['url', 'name']
+        # exclude = ('permissions',)
+        fields = '__all__'
 
 
-class EventSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(max_length=200, required=True)
-    description = serializers.CharField(max_length=200, required=True)
-    author = serializers.CharField(max_length=200, required=True)
-    date = serializers.CharField(max_length=200, required=True)
-    location = serializers.CharField(max_length=200, required=True)
-    status = serializers.ChoiceField(choices=EVENT_STATUS)
+class EventSerializer(serializers.HyperlinkedModelSerializer):
+    # TODO
+    author = serializers.HyperlinkedRelatedField(queryset=User.objects.all(),
+                                                 view_name='user-detail',
+                                                 many=False)
+
+    # users = serializers.HyperlinkedRelatedField(queryset=User.objects.all(), view_name='user-detail', many=True)
 
     class Meta:
         model = Events
-        fields = ('__all__')
+        fields = '__all__'
+
+
+# Magic because bugs in django
+# https://github.com/encode/django-rest-framework/issues/1249#issuecomment-239977684
+class PermissionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Permission
+        fields = ('url', 'name', 'codename', 'objects', 'natural_key')
