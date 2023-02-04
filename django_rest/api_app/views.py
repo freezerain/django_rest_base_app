@@ -19,7 +19,9 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # TODO Any user should be able to register but not edit
+    # permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [IsOwnerOrReadOnly]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -63,6 +65,7 @@ class EventViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
 
 class PermissionViewSet(viewsets.ModelViewSet):
     """
