@@ -4,6 +4,7 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 from django_rest.api_app.models import Events
+from django_rest.api_app.permissions import IsOwnerOrReadOnly
 from django_rest.api_app.serializers import UserSerializer, GroupSerializer, EventSerializer, PermissionSerializer
 
 
@@ -13,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -22,13 +23,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Events.objects.all()
     serializer_class = EventSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
