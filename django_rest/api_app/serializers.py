@@ -8,11 +8,12 @@ DEFAULT_CHAR_LENGTH = 200
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    my_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
+    owned_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
+    subscribed_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ['url', 'username', 'my_events']
+        fields = ['url', 'username', 'owned_events', 'subscribed_events']
         # exclude = ('password', 'last_login', 'is_superuser', 'last_name', '')
         # fields = '__all__'
 
@@ -27,12 +28,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     # TODO
-    author = serializers.HyperlinkedRelatedField(queryset=User.objects.all(),
-                                                 view_name='user-detail',
-                                                 many=False)
+    owner = serializers.HyperlinkedRelatedField(view_name='user-detail', many=False, read_only=True)
 
     # users = serializers.HyperlinkedRelatedField(queryset=User.objects.all(), view_name='user-detail', many=True)
-
     class Meta:
         model = Events
         fields = '__all__'
@@ -44,3 +42,4 @@ class PermissionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Permission
         fields = ('url', 'name', 'codename', 'objects', 'natural_key')
+
