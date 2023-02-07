@@ -6,12 +6,12 @@ DEFAULT_CHAR_LENGTH = 200
 
 class Events(models.Model):
     title = models.CharField(max_length=DEFAULT_CHAR_LENGTH, unique=True)
-    # optional data
     description = models.CharField(max_length=DEFAULT_CHAR_LENGTH, blank=True)
     location = models.CharField(max_length=DEFAULT_CHAR_LENGTH, blank=True)
-    date = models.DateTimeField()
+    date = models.DateTimeField(blank=True)
     owner = models.ForeignKey(User, related_name='owned_events', on_delete=models.CASCADE)
-    subscribers = models.ManyToManyField(User, related_name='subscribed_events')
+    subscribers = models.ManyToManyField(User, related_name='subscribed_events', blank=True)
+
     class EventStatus(models.TextChoices):
         DRAFT = 'DRAFT', 'Draft'
         PRIVATE = 'PRIVATE', 'Private'

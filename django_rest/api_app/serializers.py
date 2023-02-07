@@ -10,8 +10,10 @@ DEFAULT_CHAR_LENGTH = 200
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    owned_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
-    subscribed_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
+    #owned_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
+    owned_events = serializers.SlugRelatedField(slug_field='title', many=True, queryset=Events.objects.all())
+    #subscribed_events = serializers.HyperlinkedRelatedField(view_name='events-detail', many=True, read_only=True)
+    subscribed_events = serializers.SlugRelatedField(slug_field='title', many=True, queryset=Events.objects.all())
 
     class Meta:
         model = User
@@ -30,8 +32,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     # TODO
-    owner = serializers.HyperlinkedRelatedField(view_name='user-detail', many=False, read_only=True)
-
+    #owner = serializers.HyperlinkedRelatedField(view_name='user-detail', many=False, queryset=User.objects.all())
+    owner = serializers.SlugRelatedField(slug_field='username', many=False, queryset=User.objects.all())
+    subscribers = serializers.SlugRelatedField(slug_field='username', many=True, queryset=User.objects.all())
     # users = serializers.HyperlinkedRelatedField(queryset=User.objects.all(), view_name='user-detail', many=True)
     class Meta:
         model = Events
