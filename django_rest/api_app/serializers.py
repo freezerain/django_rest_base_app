@@ -1,6 +1,8 @@
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import ValidationError
 
 from django_rest.api_app.models import Events
 
@@ -43,3 +45,26 @@ class PermissionSerializer(serializers.HyperlinkedModelSerializer):
         model = Permission
         fields = ('url', 'name', 'codename', 'objects', 'natural_key')
 
+
+class RegisterSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=45)
+    password = serializers.CharField(min_length=4, write_only=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "password"]
+
+    def validate(self, attrs):
+        user = User.objects.filter(username=attrs["username"]).exists()
+        if user:
+            raise ValidationError("Username already exists")
+        return super().validate(attrs)
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data['username'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        Token.objects.create(user=user)
+        return user
