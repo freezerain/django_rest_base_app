@@ -17,7 +17,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['url', 'username', 'owned_events', 'subscribed_events']
+        fields = ['url', 'username', 'owned_events', 'subscribed_events', 'is_superuser']
         # exclude = ('password', 'last_login', 'is_superuser', 'last_name', '')
         # fields = '__all__'
 
@@ -34,7 +34,8 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
     # TODO
     #owner = serializers.HyperlinkedRelatedField(view_name='user-detail', many=False, queryset=User.objects.all())
     owner = serializers.SlugRelatedField(slug_field='username', many=False, queryset=User.objects.all(), read_only=False)
-    subscribers = serializers.SlugRelatedField(slug_field='username', many=True, queryset=User.objects.all(), read_only=False)
+    subscribers = serializers.SlugRelatedField(slug_field='username', many=True, queryset=User.objects.all(), read_only=False, default='')
+    date = serializers.DateTimeField(format=None)
     # users = serializers.HyperlinkedRelatedField(queryset=User.objects.all(), view_name='user-detail', many=True)
     class Meta:
         model = Events
