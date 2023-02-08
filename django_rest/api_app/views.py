@@ -1,7 +1,5 @@
 # Create your views here.
-import sys
 
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, Group, Permission
 from django.db.migrations import serializer
 from rest_framework import permissions, status, generics
@@ -10,9 +8,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
-from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from django_rest.api_app.models import Events
 from django_rest.api_app.permissions import IsOwnerOrReadOnly
@@ -22,18 +18,15 @@ from django_rest.api_app.serializers import UserSerializer, GroupSerializer, Eve
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint to Users data table
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # TODO Any user should be able to register but not edit
-    # permission_classes = [permissions.IsAuthenticated]
-    # permission_classes = [IsOwnerOrReadOnly]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint to Groups data table
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
@@ -41,10 +34,12 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class EventViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint to Events data table
+    """
     queryset = Events.objects.all()
     serializer_class = EventSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    # Save owner = User onCreate()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -76,7 +71,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class PermissionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows permissions to be viewed or edited.
+    API endpoint to Permission data table
     """
     permission_classes = [permissions.IsAdminUser]
     queryset = Permission.objects.all()
@@ -84,7 +79,9 @@ class PermissionViewSet(viewsets.ModelViewSet):
 
 
 class RequestTokenView(ObtainAuthToken):
-
+    """
+    Requesting token for client if username and password provided
+    """
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
@@ -99,5 +96,8 @@ class RequestTokenView(ObtainAuthToken):
 
 
 class RegisterView(generics.CreateAPIView):
+    """
+    Endpoint to register new user
+    """
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
