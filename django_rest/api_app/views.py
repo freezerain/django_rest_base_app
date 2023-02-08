@@ -44,8 +44,8 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = Events.objects.all()
     serializer_class = EventSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
     # Save owner = User onCreate()
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
@@ -94,7 +94,7 @@ class RequestTokenView(ObtainAuthToken):
         return Response({
             'token': token.key,
             'username': user.username,
-            'email': user.email
+            'is_superuser': user.is_superuser
         })
 
 
