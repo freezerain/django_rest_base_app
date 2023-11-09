@@ -20,7 +20,15 @@ Before starting to work on this project, please take a look at the following fil
 
 ### 🔧 Dependencies 🔧
 
-You will need Python, Django, and Django REST framework to run this project. The details can be found in the requirements.txt file.
+You will need:
+
+- **Python 3.10+**
+- **Django 4.2.7**
+- **Django REST framework 3.14.0**
+- **SQLite 3** 
+- **pytest 7.4.3** 
+
+The details can be found in the requirements.txt file.
 
 ### 💻 Installing 💻
 
@@ -47,6 +55,7 @@ The available API endpoints are:
 
 The available Django views are:
 
+- Specific user by his **id**: http://127.0.0.1:8000/users/{id}
 - Admin site: http://127.0.0.1:8000/admin/
 - Login UI: http://127.0.0.1:8000/api-auth/login/
 - Logout: http://127.0.0.1:8000/api-auth/logout/
