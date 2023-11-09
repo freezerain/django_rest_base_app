@@ -16,7 +16,7 @@ router.register(r'events', views.EventViewSet)
 router.register(r'permission', PermissionViewSet)
 
 # Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
+# Additionally, include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),

@@ -58,6 +58,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.filter(username=attrs["username"]).exists()
         if user:
             raise ValidationError("Username already exists")
+        password = attrs["password"]
+        if len(password) < 4:
+            raise ValidationError("Password must be at least 4 characters long")
         return super().validate(attrs)
 
     def create(self, validated_data):

@@ -1,43 +1,58 @@
-# Django REST api 
+# 🚀 Django REST API 🚀
 
-Basic rest api endpoints with "Event" model for internal use.
+This is a Django REST framework backend that offers some basic features and functionality for your project. You can fork it and build on it to suit your needs.
+## 📝 Description 📝
 
-## Description
+This is a bare-bones base meant to be a starting point for your development. It already includes some basic features as examples, such as:
 
-This project template is designed to be used with [Vue client for django](https://github.com/freezerain/vue-django-client).
+- User authentication and registration
+- Token-based authentication
+- CRUD operations for users, events, groups, and permissions
+- Users are able to subscribe/unsubscribe to events
+- Admin interface
 
-## Getting Started
+Before starting to work on this project, please take a look at the following files:
 
-### Dependencies
+- [settings.py](django_rest/settings.py): This file contains the configuration settings for the project, such as the installed apps, middleware, database, etc.
+- [urls.py](django_rest/settings.py): This file defines the URL patterns for the project, such as the API endpoints, the admin site, the login/logout views, etc.
 
-Python, Django and Django-rest-framework. Details can be found in requirements.txt
+## 🛠 Getting Started 🛠
 
-### Installing
+### 🔧 Dependencies 🔧
 
-* ```$ pip install -r requirements.txt```
-* ```$ manage.py makemigrations```
-* ```$ manage.py migrate```
-* ```$ manage.py createsuperuser```
-* ```$ manage.py runserver```
+You will need Python, Django, and Django REST framework to run this project. The details can be found in the requirements.txt file.
 
-### Running
+### 💻 Installing 💻
 
-Default django rest server UI should be accessible on http://127.0.0.1:8000/
+To install the project, follow these steps:
 
-Available DB endpoints:
-* user table: http://127.0.0.1:8000/users/
-* events table: http://127.0.0.1:8000/events/
-* groups table(internal use): http://127.0.0.1:8000/groups/
-* permission table(not used): http://127.0.0.1:8000/permission/
+- Clone the repository or download the zip file
+- Create a virtual environment and activate it
+- Install the required packages with the command: ```$ pip install -r requirements.txt```
+- Make the database migrations with the command: ```$ manage.py makemigrations```
+- Apply the migrations with the command: ```$ manage.py migrate```
+- Create a superuser account with the command: ```$ manage.py createsuperuser```
+- Run the development server with the command: ```$ manage.py runserver```
 
-Available server endpoints:
-* Django-rest - admin cabinet: http://127.0.0.1:8000/admin/
-* Django-rest - login UI: http://127.0.0.1:8000/api-auth/login/
-* Django-rest - logout: http://127.0.0.1:8000/api-auth/logout/
-* Django-rest - admin cabinet: http://127.0.0.1:8000/admin/
-* Client - get token by username:password: http://127.0.0.1:8000/api-token-auth/
-* Client - register new user: http://127.0.0.1:8000/register/
+### 🚀 Running 🚀
 
-## Authors
+The default Django REST framework UI should be accessible on http://127.0.0.1:8000/
 
-🔥Ilia Rodikov - freeze.eli@gmail.com🔥
+The available API endpoints are:
+
+- User table: http://127.0.0.1:8000/users/
+- Events table: http://127.0.0.1:8000/events/
+- Groups table: http://127.0.0.1:8000/groups/
+- Permission table: http://127.0.0.1:8000/permission/
+
+The available Django views are:
+
+- Admin site: http://127.0.0.1:8000/admin/
+- Login UI: http://127.0.0.1:8000/api-auth/login/
+- Logout: http://127.0.0.1:8000/api-auth/logout/
+- Register new user: http://127.0.0.1:8000/register/
+- Get token by username:password: http://127.0.0.1:8000/api-token-auth/
+
+## 👥 Authors 👥
+
+🔥 Ilia Rodikov - freeze.eli@gmail.com 🔥

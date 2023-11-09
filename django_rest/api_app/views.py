@@ -41,8 +41,8 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    def perform_create(self, l_serializer):
+        l_serializer.save(owner=self.request.user)
 
     @action(detail=True, methods=['post', 'get'], permission_classes=[permissions.IsAuthenticated])
     def subscribe(self, request, pk=None):
@@ -83,10 +83,10 @@ class RequestTokenView(ObtainAuthToken):
     Requesting token for client if username and password provided
     """
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        l_serializer = self.serializer_class(data=request.data,
+                                             context={'request': request})
+        l_serializer.is_valid(raise_exception=True)
+        user = l_serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,

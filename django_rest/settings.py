@@ -9,10 +9,10 @@ from django_rest import api_app
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# TODO !!!! SECURITY WARNING: keep the secret key used in production secret! !!!!!!
+# TODO !!! SECURITY WARNING: replace the secret key with project new one !!!
 SECRET_KEY = 'django-insecure-#j^w4p)#(%8j7d3#@_7+x9ujn)wps*&m*n^=4debo)mio#1w_9'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# TODO SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
