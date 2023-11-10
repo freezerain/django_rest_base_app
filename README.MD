@@ -62,6 +62,15 @@ The available Django views are:
 - Register new user: http://127.0.0.1:8000/register/
 - Get token by username:password: http://127.0.0.1:8000/api-token-auth/
 
+## 🧪 Testing 🧪
+
+To test the project, follow these steps:
+
+- Run the tests with the command: ```$ pytest```
+- Alternatively, you can run the tests in parallel using multiple CPU cores with the 
+command: ```$ pytest -n auto```
+
+
 ## 👥 Authors 👥
 
 🔥 Ilia Rodikov - freeze.eli@gmail.com 🔥

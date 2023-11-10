@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -8,7 +10,7 @@ class Events(models.Model):
     title = models.CharField(max_length=DEFAULT_CHAR_LENGTH, unique=True)
     description = models.CharField(max_length=DEFAULT_CHAR_LENGTH, blank=True)
     location = models.CharField(max_length=DEFAULT_CHAR_LENGTH, blank=True)
-    date = models.DateTimeField(blank=True)
+    date = models.DateTimeField(default=datetime.now, blank=True)
     owner = models.ForeignKey(User, related_name='owned_events', on_delete=models.CASCADE)
     subscribers = models.ManyToManyField(User, related_name='subscribed_events', blank=True)
 
